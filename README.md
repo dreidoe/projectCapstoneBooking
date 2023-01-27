@@ -1,39 +1,68 @@
-# Node Starter
+**Primary Goals**
 
-## TLDR
+- When a merchant logs in they should see their profile view and a calendar
+- When looking at a profile view as the merchant you should see a view of a menu that you can add to and take away from
+- A merchant should be able to update their prices at will
+- A merchant viewing their calendar should be able to view any day and add be able to grey it out for days that they do not want to take customers
+- When a stylist wants to add a new booking they should see a requests bin with new request that need approval or denial with comments and concerns made by the user
+- When a client clicks the calendar link they should be able to choose between a consult or regular menu appointment
+- When the client selects a day, they should be able to select services and add it to a cart , before submission for request they should be prompted to pay a deposit based on what the merchant set, no larger than 50%
+- When a merchant is creating their menu they should be able to set the deposit range from 0-50%
+- When the client selects a date they should also be able to pick a specific time
+- When a client wants to find a merchant, then they should be able to access the search bar and search for a merchant and filter
+- When a a user wants to be updated, then they should be able to to sign up for an email subscription or turn on notifications for merchant updates
+- When a merchant is reating their profile, they should be able to add an about me with a descriptioin of their services and themselves
+- When a merchant recieves and accepts a booking, then the user should get an update of their booking confirmation
+- **Secondary Goals**
 
-Use of this starter template assumes that you have a 'complete dev environment' setup - a terminal, Node, VS Code, at least. If not, you may want to [start here.](https://www.notion.so/codefinity/Setting-up-a-Local-Dev-Environment-for-JS-02a4e9f4a30043d3a8e7d109be3448f4)
+- When a user is creating their profile, then they should be able to add a gallery of their work including pictures and videos to a gallery
+- When a user gets approved for service they should then be able to send the merchant a message
+- when a merchant apporoves a request, then they should be able add reminders to update
 
-1. Click that big green button to start using it.
-2. `clone` your new repo from your GitHub to your local computer
-3. `cd` into the `clone`d repo and enter: `npm i`.
-4. `npm start`
+export default model(
+"Merchant",
+new Schema({
+firstName: { type: String, required: true },
+lastName: {type: String, required: true},
+userName: {
+type: String,
+required: [true, "Username is required"],
+unique: [true, "Username already exists"],
+minLength: [3, "Username must be at least 3 characters long"],
+maxLength: [15, "Username must be at most 20 characters long"],
+},
+email: {type: String, required: true},
+password: {type: String, required: [true, "Password is required"],
+minLength:[12, "Passoword must be at least 12 characters long"],
+},
 
-## Some of What's Included
+    avatar: { type: String, required: false },
+    id: { type: String, required: true },
 
-- [ESLint](https://eslint.org/) with the _Standard_ JS style guide.
-- [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-- Various VS Code 'settings' and 'extensions.' Look in the bottom right when you open this up in VS Code to install them. The settings are responsible for auto-formatting on save (among other things), and the extensions are responsible for the auto-formatting.
-- [Vitest](https://vitest.dev/) for testing. Just do `npm test` or `npm t`.
+})
+);
 
-## Dependency Graph
+export default model(
+"Client",
+new Schema({
+fullName: { type: String, required: true },
+userName: {
+type: String,
+required: [true, "Username is required"],
+unique: [true, "Username already exists"],
+minLength: [3, "Username must be at least 3 characters long"],
+maxLength: [15, "Username must be at most 20 characters long"],
+},
 
-`npm run dep-graph`
+    avatar: { type: String, required: false },
+    id: { type: String, required: true },
 
-This project includes "dependency-cruiser". You can generate a dependency graph by running npm run dep-graph. This will be in SVG format by default. You can change this in the package.json file.
+})
+);
 
-Note: You must have Graphviz installed for this to work. You can install it using Homebrew on macOS with brew install graphviz.
-
-Here's an example of what the dependency graph looks like:
-
-![Dependency Graph](./dependency-graph.svg)
-
-## How To Use
-
-Run `npm i` to get all the things installed.
-
-`npm start` will watch the `app` directory for any changes using `nodemon`
-
-## Other Notes
-
-To use the new experimental `fetch` that's now in Node, just add: `/* global fetch */` to the top of your file. This will appease ESLint.
+- [ ] `POST /api/merchant/register` - Register a Merchant
+- [ ] `POST /api/merchant/login` - Login a Merchant
+- [ ] `POST /api/merchant/logout` - Logout a Merchant
+- [ ] `DELETE /api/merchant/:teacherID` - Delete a Merchant (admin only)
+- [ ] `GET /api/merchant` - Get all Merchants(Admin only)
+- [ ] `PUT /api/merchant/:merchantID` - Update a Merchant( merchant updates their own profiles admin only )
