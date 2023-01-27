@@ -11,13 +11,13 @@
 - When the client selects a date they should also be able to pick a specific time
 - When a client wants to find a merchant, then they should be able to access the search bar and search for a merchant and filter
 - When a a user wants to be updated, then they should be able to to sign up for an email subscription or turn on notifications for merchant updates
-- When a merchant is reating their profile, they should be able to add an about me with a descriptioin of their services and themselves
-- When a merchant recieves and accepts a booking, then the user should get an update of their booking confirmation
+- When a merchant is reading their profile, they should be able to add an about me with a description of their services and themselves
+- When a merchant receives and accepts a booking, then the user should get an update of their booking confirmation
 - **Secondary Goals**
 
 - When a user is creating their profile, then they should be able to add a gallery of their work including pictures and videos to a gallery
 - When a user gets approved for service they should then be able to send the merchant a message
-- when a merchant apporoves a request, then they should be able add reminders to update
+- when a merchant approves a request, then they should be able add reminders to update
 
 export default model(
 "Merchant",
@@ -33,7 +33,7 @@ maxLength: [15, "Username must be at most 20 characters long"],
 },
 email: {type: String, required: true},
 password: {type: String, required: [true, "Password is required"],
-minLength:[12, "Passoword must be at least 12 characters long"],
+minLength:[12, "Password must be at least 12 characters long"],
 },
 
     avatar: { type: String, required: false },
@@ -65,4 +65,11 @@ maxLength: [15, "Username must be at most 20 characters long"],
 - [ ] `POST /api/merchant/logout` - Logout a Merchant
 - [ ] `DELETE /api/merchant/:teacherID` - Delete a Merchant (admin only)
 - [ ] `GET /api/merchant` - Get all Merchants(Admin only)
-- [ ] `PUT /api/merchant/:merchantID` - Update a Merchant( merchant updates their own profiles admin only )
+- [ ] `PUT /api/merchant/:merchantID` - Update a Merchant( merchant updates their own profiles admin only updates all)
+
+- [ ] `POST /api/user/register` - Register a user
+- [ ] `POST /api/user/login` - Login a user
+- [ ] `POST /api/user/logout` - Logout a user
+- [ ] `PUT /api/user/:userID` - Update a user( user updates their own profiles admin only updates all )
+- [ ]`PUT /api/user/request`- User sends out a request
+- [ ]
