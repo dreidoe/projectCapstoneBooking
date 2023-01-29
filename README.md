@@ -60,6 +60,18 @@ maxLength: [15, "Username must be at most 20 characters long"],
 })
 );
 
+[{
+"user":{
+"services": {
+"type",
+"description",
+"accepted by": {
+"approved":false
+},
+},
+},
+}]
+
 - [ ] `POST /api/merchant/register` - Register a Merchant
 - [ ] `POST /api/merchant/login` - Login a Merchant
 - [ ] `POST /api/merchant/logout` - Logout a Merchant
@@ -72,4 +84,4 @@ maxLength: [15, "Username must be at most 20 characters long"],
 - [ ] `POST /api/user/logout` - Logout a user
 - [ ] `PUT /api/user/:userID` - Update a user( user updates their own profiles admin only updates all )
 - [ ]`PUT /api/user/request`- User sends out a request
-- [ ]
+- [ ] `DELETE /api/user/delete`- User can delete a request perviously sent (within a time frame)
