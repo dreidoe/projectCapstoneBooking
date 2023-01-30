@@ -80,7 +80,8 @@ Merchant Collection
 {
 "firstName": "Bob",
 "lastName": "Evans",
-"username": "bEvans123"
+"DOB":"04-30-1987",
+"username": "bEvans123",
 "email": "bobevan2@email.com"
 "password": "Password123!"
 "phone": "615-555-5551",
@@ -89,13 +90,38 @@ Merchant Collection
 {
 "firstName": "Jill",
 "lastName": "Weathers",
-"DOB":"03-13-1996"
+"DOB":"02-13-1996",
 "username": "JillWeather123"
 "email": "jillweat@email.com"
 "password": "Password123!"
 "phone": "615-555-5551",
 "avatar":"https://unsplash.com/photos/iulnjpZyWnc?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
 "followers":"followers"
+"following":"following"
+},
+]
+
+User Collection
+[
+{
+"firstName": "Verenice ",
+"lastName": "Bryant",
+"DOB":"01-02-1997",
+"username": "bvere123",
+"email": "bvere123@email.com"
+"password": "Password123!"
+"phone": "615-555-5551",
+"avatar":"https://unsplash.com/photos/iulnjpZyWnc?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink"
+},
+{
+"firstName": "Jane",
+"lastName": "Doe",
+"DOB":"03-20-1995",
+"username": "JillWeather123"
+"email": "jillweat@email.com"
+"password": "Password123!"
+"phone": "615-555-5551",
+"avatar":"https://unsplash.com/photos/iulnjpZyWnc?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
 "following":"following"
 },
 ]
