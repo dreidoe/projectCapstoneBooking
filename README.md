@@ -60,17 +60,45 @@ maxLength: [15, "Username must be at most 20 characters long"],
 })
 );
 
-[{
-"user":{
-"services": {
-"type",
+Request Collection
+[
+{
+"User": {
+"firstName": "Bob",
+"lastName":"Evans"
+"services": { "type",
 "description",
 "accepted by": {
-"approved":false
+"approved: false},
 },
 },
 },
-}]
+]
+
+Merchant Collection
+[
+{
+"firstName": "Bob",
+"lastName": "Evans",
+"username": "bEvans123"
+"email": "bobevan2@email.com"
+"password": "Password123!"
+"phone": "615-555-5551",
+"avatar":"https://unsplash.com/photos/iulnjpZyWnc?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink"
+},
+{
+"firstName": "Jill",
+"lastName": "Weathers",
+"DOB":"03-13-1996"
+"username": "JillWeather123"
+"email": "jillweat@email.com"
+"password": "Password123!"
+"phone": "615-555-5551",
+"avatar":"https://unsplash.com/photos/iulnjpZyWnc?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink",
+"followers":"followers"
+"following":"following"
+},
+]
 
 - [ ] `POST /api/merchant/register` - Register a Merchant
 - [ ] `POST /api/merchant/login` - Login a Merchant
