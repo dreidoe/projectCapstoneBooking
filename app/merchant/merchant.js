@@ -5,6 +5,7 @@ export default model(
   new  Schema({
   firstName: { type: String, required: true, trim: true },
   lastName: { type: String, required: true, trim: true },
+  DOB: { type: Date, required: true },
   userName: {
     type: String,
     required: [true, "Username is required"],
