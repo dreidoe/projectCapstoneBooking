@@ -60,6 +60,16 @@ const merchantController = {
   viewAllRequests() {
     return Merchant.find({}).select("requests");
   },
+
+  // crete a method to view all requests by a specific user from username
+
+  viewRequestsByUserName(username) {
+    return username.findOne(username).select("+requests");
+    if (username) {
+     username.requests = [];
+      return username.save();
+    },
+  },
 };
 
 export default merchantController;

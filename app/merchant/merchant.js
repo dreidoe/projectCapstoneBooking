@@ -28,6 +28,7 @@ export default model(
           "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
       },
     },
+    catalog: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],
     followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
