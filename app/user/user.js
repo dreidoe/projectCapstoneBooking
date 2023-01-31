@@ -19,12 +19,19 @@ export default model(
     password: {
       type: String,
       required: [true, "Password is required"],
-      minLength: [
-        12,
-        "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
-      ].regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/),
-      following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+      minLength: [12, "Password must be at least 12 characters long"],
+      phone: "615-555-5551",
+      validate: {
+        validator: function (password) {
+          return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/.test(
+            password
+          );
+        },
+        message:
+          "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
+      },
     },
+    following: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
     avatar: { type: String, required: false, default: "images/profilePic.png" },
   })
