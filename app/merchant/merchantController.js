@@ -54,6 +54,12 @@ const merchantController = {
   deleteByUserName(username) {
     return Merchant.findOneAndDelete({ username });
   },
+
+  // create a method to view all request by users from merchants
+
+  viewAllRequests() {
+    return Merchant.find({}).select("requests");
+  },
 };
 
 export default merchantController;
