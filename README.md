@@ -1,3 +1,7 @@
+**_OverView_**
+
+The purpose of this calendar is to removed unnecessary fluff from the client booking process. Many independent contracted business owners are forced to use various social media outlets to book, if they do not have a website of their own. When the smartBooks calendar, merchants can place think link in their bio, post a QR code at their business or any place convenient, and a user will be able to have full access to their schedule. Merchants can make this 30 days at a time or up to a full year out depending on the demands and individual needs of their business. A user will be able to select a date that is not greyed out and currently available. After selecting a product, date, time, and service a request will be sent out to the merchant for approval. Upon approval a a booking request will be made a fulfilled.
+
 **Primary Goals**
 
 - When a merchant logs in they should see their profile view and a calendar
@@ -6,8 +10,7 @@
 - A merchant viewing their calendar should be able to view any day and add be able to grey it out for days that they do not want to take customers
 - When a stylist wants to add a new booking they should see a requests bin with new request that need approval or denial with comments and concerns made by the user
 - When a client clicks the calendar link they should be able to choose between a consult or regular menu appointment
-- When the client selects a day, they should be able to select services and add it to a cart , before submission for request they should be prompted to pay a deposit based on what the merchant set, no larger than 50%
-- When a merchant is creating their menu they should be able to set the deposit range from 0-50%
+- When the client selects a day, they should be able to select services and add it to a cart ,
 - When the client selects a date they should also be able to pick a specific time
 - When a client wants to find a merchant, then they should be able to access the search bar and search for a merchant and filter
 - When a a user wants to be updated, then they should be able to to sign up for an email subscription or turn on notifications for merchant updates
@@ -18,6 +21,8 @@
 - When a user is creating their profile, then they should be able to add a gallery of their work including pictures and videos to a gallery
 - When a user gets approved for service they should then be able to send the merchant a message
 - when a merchant approves a request, then they should be able add reminders to update
+- before submission for request they should be prompted to pay a deposit based on what the merchant set, no larger than 50%
+- When a merchant is creating their menu they should be able to set the deposit range from 0-50%
 
 export default model(
 "Merchant",
