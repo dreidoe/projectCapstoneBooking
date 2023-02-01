@@ -1,8 +1,10 @@
-**_OverView_**
+# Insert Title Here
+
+## Overview
 
 The purpose of this calendar is to removed unnecessary fluff from the client booking process. Many independent contracted business owners are forced to use various social media outlets to book, if they do not have a website of their own. When the smartBooks calendar, merchants can place think link in their bio, post a QR code at their business or any place convenient, and a user will be able to have full access to their schedule. Merchants can make this 30 days at a time or up to a full year out depending on the demands and individual needs of their business. A user will be able to select a date that is not greyed out and currently available. After selecting a product, date, time, and service a request will be sent out to the merchant for approval. Upon approval a a booking request will be made a fulfilled.
 
-**Primary Goals**
+## Primary Goals
 
 - When a merchant logs in they should see their profile view and a calendar
 - When looking at a profile view as the merchant you should see a view of a menu that you can add to and take away from
@@ -16,7 +18,8 @@ The purpose of this calendar is to removed unnecessary fluff from the client boo
 - When a a user wants to be updated, then they should be able to to sign up for an email subscription or turn on notifications for merchant updates
 - When a merchant is reading their profile, they should be able to add an about me with a description of their services and themselves
 - When a merchant receives and accepts a booking, then the user should get an update of their booking confirmation
-- **Secondary Goals**
+
+ ## Secondary Goals
 
 - When a user is creating their profile, then they should be able to add a gallery of their work including pictures and videos to a gallery
 - When a user gets approved for service they should then be able to send the merchant a message
@@ -24,6 +27,13 @@ The purpose of this calendar is to removed unnecessary fluff from the client boo
 - before submission for request they should be prompted to pay a deposit based on what the merchant set, no larger than 50%
 - When a merchant is creating their menu they should be able to set the deposit range from 0-50%
 
+## Bonus/Stretch Goals
+
+TBD
+
+## Proposed Schema
+
+```js
 export default model(
 "Merchant",
 new Schema({
@@ -46,7 +56,9 @@ minLength:[12, "Password must be at least 12 characters long"],
 
 })
 );
+```
 
+```js
 export default model(
 "Client",
 new Schema({
@@ -64,8 +76,13 @@ maxLength: [15, "Username must be at most 20 characters long"],
 
 })
 );
+```
 
-Request Collection
+## Sample Data
+
+### Request Collection
+
+```json
 [
 {
 "User": {
@@ -79,8 +96,10 @@ Request Collection
 },
 },
 ]
+```
+### Merchant Collection
 
-Merchant Collection
+```json
 [
 {
 "firstName": "Bob",
@@ -105,8 +124,11 @@ Merchant Collection
 "following":"following"
 },
 ]
+```
 
-User Collection
+### User Collection
+
+```json
 [
 {
 "firstName": "Verenice ",
@@ -130,6 +152,9 @@ User Collection
 "following":"following"
 },
 ]
+```
+
+## Routes
 
 - [ ] `POST /api/merchant/register` - Register a Merchant
 - [ ] `POST /api/merchant/login` - Login a Merchant
