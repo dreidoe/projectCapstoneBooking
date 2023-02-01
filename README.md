@@ -167,5 +167,5 @@ maxLength: [15, "Username must be at most 20 characters long"],
 - [ ] `POST /api/user/login` - Login a user
 - [ ] `POST /api/user/logout` - Logout a user
 - [ ] `PUT /api/user/:userID` - Update a user( user updates their own profiles admin only updates all )
-- [ ]`PUT /api/user/request`- User sends out a request
+- [ ] `PUT /api/user/request`- User sends out a request
 - [ ] `DELETE /api/user/delete`- User can delete a request perviously sent (within a time frame)
