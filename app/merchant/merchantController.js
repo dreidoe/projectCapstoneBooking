@@ -70,6 +70,8 @@ const merchantController = {
       return username.save();
     },
   },
+
+
 };
 
 export default merchantController;

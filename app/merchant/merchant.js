@@ -1,4 +1,11 @@
 import { Schema, model } from "mongoose";
+
+const servicesOfferedSchema = new Schema({
+  service: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+});
+
 export default model(
   "Merchant",
   new Schema({
@@ -28,10 +35,16 @@ export default model(
           "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
       },
     },
-    catalog: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+    services: [servicesOfferedSchema],
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],
     followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
     avatar: { type: String, required: false, default: "images/profilePic.png" },
   })
 );
+
+const servicesOfferedSchema = new Schema({
+  service: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+});
