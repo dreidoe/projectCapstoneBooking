@@ -43,8 +43,4 @@ export default model(
   })
 );
 
-const servicesOfferedSchema = new Schema({
-  service: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-});
+const mainModel = mongoose.model("Merchant", merchantSchema);

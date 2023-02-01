@@ -1,5 +1,11 @@
 import mongoose, { Schema, model } from "mongoose";
 // Schema for the users
+const requestServicesSchema = new Schema({
+  merchant: { type: Schema.Types.ObjectId, ref: "Merchant" },
+  service: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+});
 
 export default model(
   "User",
@@ -31,8 +37,11 @@ export default model(
           "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
       },
     },
+    requests: requestServicesSchema,
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
     avatar: { type: String, required: false, default: "images/profilePic.png" },
   })
 );
+
+const mainModel = mongoose.model("User", userSchema);
