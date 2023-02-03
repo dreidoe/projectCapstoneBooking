@@ -7,6 +7,27 @@ const requestServicesSchema = new Schema({
   price: { type: Number, required: true },
 });
 
+const availabilitySchema = new Schema({
+  day: { type: String, required: true },
+  startTime: { type: String, required: true },
+  endTime: { type: String, required: true },
+});
+
+const request = new Schema({
+  service: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  merchant: { type: Schema.Types.ObjectId, ref: "Merchant" },
+});
+
+const appointments = new Schema({
+  day: { type: String, required: true },
+  startTime: { type: String, required: true },
+  endTime: { type: String, required: true },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
+  merchant: { type: Schema.Types.ObjectId, ref: "Merchant" },
+});
+
 export default model(
   "User",
   new Schema({
@@ -37,7 +58,9 @@ export default model(
           "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
       },
     },
-    requests: requestServicesSchema,
+    appointments: [appointments],
+    requests: [request],
+    availability: [availabilitySchema],
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
     avatar: { type: String, required: false, default: "images/profilePic.png" },
