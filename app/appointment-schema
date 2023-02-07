@@ -1,9 +1,0 @@
-export { Schema, mongoose } from "mongoose";
-
-const appointmentsSchema = new Schema({
-  day: { type: String, required: true },
-  startTime: { type: String, required: true },
-  endTime: { type: String, required: true },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
-  merchant: { type: Schema.Types.ObjectId, ref: "Merchant" },
-});

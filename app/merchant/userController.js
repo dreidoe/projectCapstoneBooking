@@ -1,42 +1,36 @@
+import initServer from "../server.js";
+import initDb from "../db.js";
+import User from "./User.js";
 import mongoose from "mongoose";
-import config from "../config.js";
-import Merchant from "./Merchant.js";
-mongoose.set("strictQuery", false);
 
-mongoose
-  .connect(config.dbConn)
-  .then(() => {
-    console.info("Connected to the database");
-  })
-  .catch((err) => {
-    console.error("Error connecting to the database", err.message);
-  });
+initDb();
+initServer();
 
-const merchantController = {
-  // GET all Merchants
-  getAllMerchants() {
-    return Merchant.find({});
+const userController = {
+  // GET all users
+  getAllUsers() {
+    return User.find({});
   },
   show(id) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-      return Merchant.findById(id);
+      return User.findById(id);
     }
 
     // Wrap the error in a rejected promise so that it can be CAUGHT.
     return Promise.reject(new Error("Invalid ID"));
   },
 
-  // CREATE a new Merchant
-  createMerchant(merchant) {
-    return Merchant.create(merchant);
+  // CREATE a new User
+  createUser(merchant) {
+    return User.create(merchant);
   },
   // Show a Merchant by username
   showByUserName(username) {
-    return Merchant.findOne({ username });
+    return User.findOne({ username });
   },
   // UPDATE a Merchant
   updateByUserName(username, updatedMerchant) {
-    return Merchant.updateOne({
+    return username.updateOne({
       username,
       updatedMerchant,
       returnDocument: "after",
@@ -46,19 +40,19 @@ const merchantController = {
   // DELETE a Merchant by ID
   deleteById(id2Delete) {
     if (mongoose.Types.ObjectId.isValid(id2Delete)) {
-      return Merchant.findByIdAndDelete(id2Delete);
+      return User.findByIdAndDelete(id2Delete);
     }
     return Promise.reject(new Error("Invalid ID"));
   },
   // DELETE a Merchant by username
   deleteByUserName(username) {
-    return Merchant.findOneAndDelete({ username });
+    return User.findOneAndDelete({ username });
   },
 
   // create a method to view all request by users from merchants
 
   viewAllRequests() {
-    return Merchant.find({}).select("requests");
+    return User.find({}).select("requests");
   },
 
   // crete a method to view all requests by a specific user from username
@@ -66,20 +60,9 @@ const merchantController = {
   viewRequestsByUserName(username) {
     return username.findOne(username).select("+requests");
     if (username) {
-     username.requests = [];
+      username.requests = [];
     }
-      return username.save();
-    },
-
-
-
-  // create a method to view all appointments  username
-
-  viewAllAppointments() {
-    return Merchant.find({}).select("appointments");
-    if (username) {
-      username.appointments = [];
-    }
+    return username.save();
   },
 
   // create a method to view all appointments by username
@@ -113,10 +96,31 @@ const merchantController = {
     }
   },
 
+  // create a method to delete a approved request from the appointment array
 
+  deleteRequestFromAppointment(username, request) {
+    return username.findOne(username).select("+appointments");
+    if (username) {
+      username.appointments = username.appointments.filter(
+        (req) => req._id !== request._id
+      );
+      return username.save();
+    }
+  },
 
+  // create a method to get all users by username
 
-
-
+  getUsersByUserName(username) {
+    return username.findOne(username).select("+users");
+    if (username) {
+      username.users = [];
+    }
+  },
+  // login a user
+  async login(username, password) {
+    const loggedInUser = await User.login(username, password);
+    return loggedInUser;
+  },
+};
 
 export default merchantController;

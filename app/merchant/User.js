@@ -1,15 +1,22 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Schema, model } from "mongoose";
-import config from "../config.js"; // Schema for the users
-import { appointmentsSchema } from "./appointments-schema.js";
-import { requestServicesSchema } from "./request-services-schema.js";
-import { availabilitySchema } from "./availability-schema.js";
+import config from "../config.js";
+import { requestServicesSchema } from "../request/request.js";
+import { appointmentsSchema } from "../appointments/appointment.js";
+import { availabilitySchema } from "../availability/availability.js";
+import { servicesOfferedSchema } from "../services-offered/services-offered.js";
 
-const userSchema = new Schema({
+export const userSchema = new Schema({
+  userType: {
+    type: String,
+    required: true,
+    trim: true,
+    enum: ["user", "merchant"],
+  },
   firstName: { type: String, required: true, trim: true },
   lastName: { type: String, required: true, trim: true },
-  DOB: { type: Date, required: true, trim: true },
+  DOB: { type: Date, required: true },
   userName: {
     type: String,
     trim: true,
@@ -35,9 +42,14 @@ const userSchema = new Schema({
         "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
     },
   },
+  // TODO: 'businessName' should be unique
+  // TODO: 'businessName' should be required IF 'userType' is 'merchant'
+  businessName: { type: String, required: true, trim: true },
+  services: [servicesOfferedSchema],
   appointments: [appointmentsSchema],
   requests: [requestServicesSchema],
   availability: [availabilitySchema],
+  // TODO: Consider specifying a 'userType' field to differentiate between users and merchants (enum: ['user', 'merchant'])
 });
 
 userSchema.pre("save", async function (next) {
@@ -51,7 +63,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.statics.login = async function (username, password) {
-  // * Find the user by username (case insensitive)
+  // * Find the merchant by username (case insensitive)
   const user = await this.findOne({ username });
 
   let isMatch = false;
@@ -74,4 +86,4 @@ userSchema.statics.login = async function (username, password) {
     : null;
 };
 
-export default model("User", userSchema);
+export default model("Merchant", userSchema);
