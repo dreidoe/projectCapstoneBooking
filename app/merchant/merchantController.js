@@ -43,7 +43,7 @@ const merchantController = {
       returnValidators: true,
     });
   },
-  // DELETE a Merchant
+  // DELETE a Merchant by ID
   deleteById(id2Delete) {
     if (mongoose.Types.ObjectId.isValid(id2Delete)) {
       return Merchant.findByIdAndDelete(id2Delete);
@@ -67,11 +67,56 @@ const merchantController = {
     return username.findOne(username).select("+requests");
     if (username) {
      username.requests = [];
+    }
       return username.save();
     },
+
+
+
+  // create a method to view all appointments  username
+
+  viewAllAppointments() {
+    return Merchant.find({}).select("appointments");
+    if (username) {
+      username.appointments = [];
+    }
+  },
+
+  // create a method to view all appointments by username
+
+  viewAppointmentsByUserName(username) {
+    return username.findOne(username).select("+appointments");
+    if (username) {
+      username.appointments = [];
+    }
+  },
+
+  // create a method to push a request to the appointment array
+
+  pushRequestToAppointment(username, request) {
+    return username.findOne(username).select("+appointments");
+    if (username) {
+      username.appointments.push(request);
+      return username.save();
+    }
+  },
+
+  // create a method to delete a unapproved request from the request array
+
+  deleteRequestFromRequest(username, request) {
+    return username.findOne(username).select("+requests");
+    if (username) {
+      username.requests = username.requests.filter(
+        (req) => req._id !== request._id
+      );
+      return username.save();
+    }
   },
 
 
-};
+
+
+
+
 
 export default merchantController;

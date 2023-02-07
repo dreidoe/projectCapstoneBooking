@@ -1,70 +1,77 @@
-import mongoose, { Schema, model } from "mongoose";
-// Schema for the users
-const requestServicesSchema = new Schema({
-  merchant: { type: Schema.Types.ObjectId, ref: "Merchant" },
-  service: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-});
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { Schema, model } from "mongoose";
+import config from "../config.js"; // Schema for the users
+import { appointmentsSchema } from "./appointments-schema.js";
+import { requestServicesSchema } from "./request-services-schema.js";
+import { availabilitySchema } from "./availability-schema.js";
 
-const availabilitySchema = new Schema({
-  day: { type: String, required: true },
-  startTime: { type: String, required: true },
-  endTime: { type: String, required: true },
-});
-
-const request = new Schema({
-  service: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  merchant: { type: Schema.Types.ObjectId, ref: "Merchant" },
-});
-
-const appointments = new Schema({
-  day: { type: String, required: true },
-  startTime: { type: String, required: true },
-  endTime: { type: String, required: true },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
-  merchant: { type: Schema.Types.ObjectId, ref: "Merchant" },
-});
-
-export default model(
-  "User",
-  new Schema({
-    _id: mongoose.Schema.types.ObjectId,
-    firstName: { type: String, required: true, trim: true },
-    lastName: { type: String, required: true, trim: true },
-    DOB: { type: Date, required: true },
-    userName: {
-      type: String,
-      required: [true, "Username is required"],
-      unique: [true, "Username already exists"],
-      minLength: [3, "Username must be at least 3 characters long"],
-      maxLength: [20, "Username cannot exceed 20 characters"],
-    },
-    email: { type: String, required: true, unique: true },
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-      minLength: [12, "Password must be at least 12 characters long"],
-      phone: "615-555-5551",
-      validate: {
-        validator: function (password) {
-          return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/.test(
-            password
-          );
-        },
-        message:
-          "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
+const userSchema = new Schema({
+  firstName: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
+  DOB: { type: Date, required: true, trim: true },
+  userName: {
+    type: String,
+    trim: true,
+    required: [true, "Username is required"],
+    unique: [true, "Username already exists"],
+    minLength: [3, "Username must be at least 3 characters long"],
+    maxLength: [20, "Username cannot exceed 20 characters"],
+  },
+  email: { type: String, required: true, unique: true, trim: true },
+  password: {
+    type: String,
+    trim: true,
+    required: [true, "Password is required"],
+    minLength: [12, "Password must be at least 12 characters long"],
+    phone: "615-555-5551",
+    validate: {
+      validator: function (password) {
+        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/.test(
+          password
+        );
       },
+      message:
+        "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
     },
-    appointments: [appointments],
-    requests: [request],
-    availability: [availabilitySchema],
-    following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  },
+  appointments: [appointmentsSchema],
+  requests: [requestServicesSchema],
+  availability: [availabilitySchema],
+});
 
-    avatar: { type: String, required: false, default: "images/profilePic.png" },
-  })
-);
+userSchema.pre("save", async function (next) {
+  // * Only hash the password if it has been modified (or is new)
+  if (this.isModified("password")) {
+    const generatedSalt = await bcrypt.genSalt(config.saltRounds);
+    this.password = await bcrypt.hash(this.password, generatedSalt);
+  }
 
-const mainModel = mongoose.model("User", userSchema);
+  next();
+});
+
+userSchema.statics.login = async function (username, password) {
+  // * Find the user by username (case insensitive)
+  const user = await this.findOne({ username });
+
+  let isMatch = false;
+  // * If there is a user, compare the password
+  if (user) {
+    isMatch = await bcrypt.compare(password, user.password);
+  }
+
+  return isMatch
+    ? jwt.sign(
+        {
+          user: {
+            id: user._id,
+            username: user.username,
+          },
+        },
+        config.jwtSecret,
+        { expiresIn: config.jwtExpiresIn }
+      )
+    : null;
+};
+
+export default model("User", userSchema);
