@@ -41,7 +41,7 @@ const userController = {
     });
   },
 
-  // DELETE a Merchant by ID
+  // DELETE a User by ID
   deleteById(id2Delete) {
     if (mongoose.Types.ObjectId.isValid(id2Delete)) {
       return User.findByIdAndDelete(id2Delete);
@@ -49,7 +49,7 @@ const userController = {
     return Promise.reject(new Error("Invalid ID"));
   },
 
-  // DELETE a Merchant by username
+  // DELETE a user by username
   deleteByUserName(username) {
     return User.findOneAndDelete({ username });
   },
@@ -123,6 +123,14 @@ const userController = {
   async login(username, password) {
     const loggedInUser = await User.login(username, password);
     return loggedInUser;
+  },
+
+  // create a method to get all request by a user
+  viewRequestsByMerchant(username) {
+    username.findOne(username).select("+requests");
+    if (username) {
+      username.requests = [];
+    }
   },
 };
 

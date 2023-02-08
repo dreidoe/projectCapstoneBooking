@@ -182,5 +182,20 @@ router.get("/logout", async (req, res) => {
     res.status(401).json({ message: "You are not logged in" });
   }
 });
+// create a route to view a merchant by username
+router.get("/merchants", async (req, res) => {
+  const merchants = await userController.getMerchantsByUserName(
+    req.user.username
+  );
 
+  res.json(merchants);
+});
+// create a route to view all request by a user
+router.get("/requests", async (req, res) => {
+  const requestsByUser = await userController.viewRequestsByUser(
+    req.user.username
+  );
+
+  res.json(requestsByUser);
+});
 export default router;
