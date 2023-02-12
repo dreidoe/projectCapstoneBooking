@@ -3,9 +3,9 @@ import jwt from "jsonwebtoken";
 import { Schema, model } from "mongoose";
 import config from "../config.js";
 import { requestServicesSchema } from "../request/request.js";
-import { appointmentsSchema } from "../appointments/appointment.js";
+import { appointmentSchema } from "../appointment/appointment.js";
 import { availabilitySchema } from "../availability/availability.js";
-import { servicesOfferedSchema } from "../services-offered/services-offered.js";
+import { serviceSchema } from "../service/service-offered.js";
 
 export const userSchema = new Schema({
   userType: {
@@ -46,8 +46,8 @@ export const userSchema = new Schema({
   // TODO: 'businessName' should be unique
   // TODO: 'businessName' should be required IF 'userType' is 'merchant'
   businessName: { type: String, required: true, trim: true },
-  services: [servicesOfferedSchema],
-  appointments: [appointmentsSchema],
+  services: [serviceSchema],
+  appointments: [appointmentSchema],
   requests: [requestServicesSchema],
   availability: [availabilitySchema],
   // TODO: Consider specifying a 'userType' field to differentiate between users and merchants (enum: ['user', 'merchant'])

@@ -1,5 +1,6 @@
 import { Router } from "express";
-import userController from "./controller.js.js";
+import mongoose from "mongoose";
+import userController from "./userController.js";
 
 const router = new Router();
 
@@ -197,5 +198,23 @@ router.get("/requests", async (req, res) => {
   );
 
   res.json(requestsByUser);
+});
+
+router.get("/:id", async (req, res) => {
+  const foundUser = await userController
+    .getStudentById(req.params.id)
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError && err.kind === "ObjectId") {
+        res.status(400).json({ message: "Invalid ID" });
+      } else {
+        res.status(500).json({ message: err.message });
+      }
+    });
+
+  if (foundUser) {
+    res.json(foundUser);
+  } else {
+    res.status(404).json({ message: "Student not found" });
+  }
 });
 export default router;

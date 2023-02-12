@@ -1,10 +1,5 @@
 import mongoose from "mongoose";
-import initDb from "../db.js";
-import initServer from "../server.js";
 import User from "./User.js";
-
-initDb();
-initServer();
 
 const userController = {
   // GET all users
