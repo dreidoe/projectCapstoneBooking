@@ -18,6 +18,7 @@ const userController = {
 
   // CREATE a new User
   createUser(merchant) {
+    // TODO: Fix the validation or remove all validations from Model
     return User.create(merchant);
   },
 
