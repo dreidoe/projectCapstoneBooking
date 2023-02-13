@@ -4,15 +4,18 @@ import userController from "./userController.js";
 
 const router = new Router();
 
+// http://localhost:3000/user
+router.get("/", (_, res) => {
+  res.send("Hello from the user router");
+});
+
 // http://localhost:3000/user/create
 router.post("/create", async (req, res) => {
-  console.log(req.body);
-  const { username, password } = req.body;
-
-  const merchant = await userController.create(username, password);
+  const merchant = await userController.createUser(req.body);
 
   res.json(merchant);
 });
+
 // TODO: create a route to login
 router.post("/login", async (req, res) => {
   if (req.user) {
