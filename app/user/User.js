@@ -1,51 +1,30 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose";
+import { appointmentSchema } from "../appointment/Appointment.js";
+import { availabilitySchema } from "../availability/Availability.js";
 import config from "../config.js";
-import { requestServicesSchema } from "../request/request.js";
-import { appointmentSchema } from "../appointment/appointment.js";
-import { availabilitySchema } from "../availability/availability.js";
+import { requestServicesSchema } from "../request/Request.js";
 import { serviceSchema } from "../service/service-offered.js";
 
 export const userSchema = new Schema({
   userType: {
     type: String,
-    required: true,
-    trim: true,
+
     enum: ["user", "merchant"],
   },
-  firstName: { type: String, required: true, trim: true },
-  lastName: { type: String, required: true, trim: true },
-  DOB: { type: Date, required: true },
-  userName: {
-    toLowerCase: true,
-    type: String,
-    trim: true,
-    required: [true, "Username is required"],
-    unique: [true, "Username already exists"],
-    minLength: [3, "Username must be at least 3 characters long"],
-    maxLength: [20, "Username cannot exceed 20 characters"],
-  },
-  email: { type: String, required: true, unique: true, trim: true },
-  password: {
-    type: String,
-    trim: true,
-    required: [true, "Password is required"],
-    minLength: [12, "Password must be at least 12 characters long"],
-    phone: "615-555-5551",
-    validate: {
-      validator: function (password) {
-        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/.test(
-          password
-        );
-      },
-      message:
-        "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
-    },
-  },
+  name: { type: String },
+  // lastName: { type: String, required: true, trim: true, toLowerCase: true },
+  DOB: { type: Date },
+  username: { toLowerCase: true, type: String, trim: true },
+  email: { type: String },
+  password: { type: String, trim: true },
+
+  phone: { type: Number },
+
   // TODO: 'businessName' should be unique
   // TODO: 'businessName' should be required IF 'userType' is 'merchant'
-  businessName: { type: String, required: true, trim: true },
+  businessName: { type: String },
   services: [serviceSchema],
   appointments: [appointmentSchema],
   requests: [requestServicesSchema],
