@@ -11,9 +11,9 @@ router.get("/", (_, res) => {
 
 // http://localhost:3000/user/create
 router.post("/create", async (req, res) => {
-  const merchant = await userController.createUser(req.body);
+  const user = await userController.createUser(req.body);
 
-  res.json(merchant);
+  res.json(user);
 });
 
 // TODO: create a route to login
@@ -137,14 +137,6 @@ router.post("/create/user", async (req, res) => {
   res.json(user);
 });
 
-// create a route to view all appointments by username
-router.get("/appointments", async (req, res) => {
-  const appointments = await userController.viewAppointmentsByUserName(
-    req.user.username
-  );
-
-  res.json(appointments);
-});
 // create a route to view all request by a specific user
 router.get("/requests", async (req, res) => {
   const requestsByUser = await userController.viewRequestsByUser(
