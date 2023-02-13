@@ -4,7 +4,9 @@ import userController from "./userController.js";
 
 const router = new Router();
 
+// http://localhost:3000/user/create
 router.post("/create", async (req, res) => {
+  console.log(req.body);
   const { username, password } = req.body;
 
   const merchant = await userController.create(username, password);
@@ -123,13 +125,13 @@ router.delete("/users", async (req, res) => {
   res.json(user2delete);
 });
 
-// create a route to create a new user
-router.post("/users", async (req, res) => {
+// create a route to create a new merchant
+router.post("/create/user", async (req, res) => {
   const { username, password } = req.body;
 
-  const newUser = await userController.createUser(username, password);
+  const user = await userController.create(username, password);
 
-  res.json(newUser);
+  res.json(user);
 });
 
 // create a route to view all appointments by username
@@ -217,4 +219,5 @@ router.get("/:id", async (req, res) => {
     res.status(404).json({ message: "Student not found" });
   }
 });
+
 export default router;

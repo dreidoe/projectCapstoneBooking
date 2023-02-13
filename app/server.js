@@ -1,18 +1,24 @@
 import express from "express";
 import cors from "cors";
 import config from "./config.js";
+
+// TODO: Consider naming this to be more specific for when we use other routers
 import router from "./user/routes.js";
-import decodedUser from "./middleware/decoded-user.js";
+// import decodedUser from "./middleware/decoded-user.js";
 
 export default () => {
   const app = express();
 
   // * Middleware order matters!
   app.use(express.json());
-  app.use(decodedUser);
+  // TODO: Add the decodedUser middleware for the jwt stuff
+  // app.use(decodedUser);
 
+  // TODO: Consider restricting this to just the :5173 port
   app.use(cors());
-  app.use("/user/routes.js/", router);
+
+  // http://localhost:3000/user/routes
+  app.use("/user", router);
 
   app.use((_, res) => {
     res.status(404).json({ message: "Not found" });
