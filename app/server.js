@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import config from "./config.js";
 
-// TODO: Consider naming this to be more specific for when we use other routers
-import router from "./user/routes.js";
+import userRouter from "./user/routes.js";
 // import decodedUser from "./middleware/decoded-user.js";
 
 export default () => {
@@ -17,8 +16,8 @@ export default () => {
   // TODO: Consider restricting this to just the :5173 port
   app.use(cors());
 
-  // http://localhost:3000/user/routes
-  app.use("/user", router);
+  // http://localhost:3000/user
+  app.use("/user", userRouter);
 
   app.use((_, res) => {
     res.status(404).json({ message: "Not found" });
